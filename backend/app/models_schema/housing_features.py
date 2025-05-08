@@ -16,7 +16,7 @@ class OceanProximityEnum(str, Enum):
     near_ocean = "NEAR OCEAN"
     island = "ISLAND"
 
-class HousingFeatures(BaseModel):
+class HousingFeatures(BaseModel): 
     longitude: float = Field(..., example=-122.23)
     latitude: float = Field(..., example=37.88)
     housing_median_age: float = Field(..., example=41.0, ge=0)

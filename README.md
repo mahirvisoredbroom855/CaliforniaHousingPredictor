@@ -62,6 +62,13 @@ E --> F[Rendered Result Card + Graph]
 
 ---
 
+## 📄 Project Whitepaper
+
+You can read the full technical report detailing the model, system architecture, and deployment pipeline here:
+
+➡️ [California Housing Price Prediction Paper (PDF)](./CaliforniaHousingPaper.pdf)
+
+
 ## 📕 Backend (FastAPI)
 
 ### Install & Run:
