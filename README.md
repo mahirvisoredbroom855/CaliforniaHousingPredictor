@@ -1,101 +1,177 @@
 # 🏡 California Housing Price Predictor
 
-An interactive full-stack machine learning app that predicts median house values in California based on user-input housing features. Built and designed by **Mahir Ahmed**, this project demonstrates how to deploy real ML models through a beautiful web UI using modern tools.
+> **Project Author**: Mahir Ahmed
+> **Type**: Full-stack AI-powered web application
+> **Tech Stack**: FastAPI, React, Vite, TailwindCSS, scikit-learn, GitHub LFS
 
 ---
 
-## 🚀 Features
+## 🚀 Overview
 
-- 🔮 Predicts house prices in real-time using a trained Random Forest model
-- 🎨 Clean UI built with React + Vite + Tailwind CSS
-- ⚙️ Backend powered by FastAPI, Pydantic, and scikit-learn
-- 🔗 Frontend and backend connected via a robust API
-- 📄 Downloadable research summary included (PDF)
+This project is a **real-time housing price prediction platform** built with production-grade architecture. It uses a trained **Random Forest Regressor** model to estimate median house values in California based on demographic and geographic input features. It features:
 
----
-
-## 🧠 Tech Stack
-
-| Layer        | Tools Used                                     |
-|--------------|------------------------------------------------|
-| Frontend     | React, TypeScript, TailwindCSS, Vite           |
-| Backend      | FastAPI, Pydantic, scikit-learn, joblib        |
-| ML Model     | RandomForestRegressor, GridSearchCV, pandas    |
-| Deployment   | Vercel (frontend), Render (backend)            |
+* 📊 Machine Learning model deployed through a FastAPI backend
+* 🔗 Fully connected React + TypeScript frontend built with Vite
+* 🏢 TailwindCSS UI for sleek, responsive design
+* ✨ Support for model transparency, prediction confidence, and PDF downloads
+* ✅ GitHub LFS integration for managing large `.pkl` model files
 
 ---
 
-## 📁 Project Structure
+## 📂 Project Structure
 
-```
+```plaintext
 CaliforniaHousingPredictor/
-├── backend/                 # FastAPI backend with prediction route
-│   └── app/                 # API + ML loading logic
-├── frontend/                # React + Tailwind frontend
-├── housing.csv              # Raw dataset (optional)
-├── california_housing.ipynb # Model training + EDA
-├── requirements.txt         # Backend dependencies
-├── .gitignore               # Git exclusions
-├── .gitattributes           # LFS tracking for .pkl
-└── README.md                # This file
+├── backend/                 # FastAPI backend with model API
+│   ├── app/                # Modularized API and model logic
+│   └── ml_model/           # Trained model (.pkl)
+├── frontend/               # Vite + React + Tailwind frontend
+├── california_housing.ipynb # EDA and model training notebook
+├── housing.csv             # Raw dataset (optional)
+├── requirements.txt        # Backend dependencies
+├── .gitattributes          # Git LFS tracking for .pkl
+├── .gitignore              # Ignore cache, nodes, etc.
+└── README.md               # This file
 ```
 
 ---
 
-## 🔧 Getting Started Locally
+## 🔄 Full Stack Flow
 
-### 📦 Backend (FastAPI)
+```mermaid
+graph TD
+A[User Input via Form] --> B[Frontend React Components]
+B --> C[POST Request to FastAPI API]
+C --> D[Model Prediction with .pkl]
+D --> E[JSON Response with Prediction]
+E --> F[Rendered Result Card + Graph]
+```
+
+---
+
+## 📅 Features
+
+| Feature                 | Description                                     |
+| ----------------------- | ----------------------------------------------- |
+| 🎯 Real-Time Prediction | Predicts house prices using 8+ input features   |
+| 🌐 API Integration      | `/api/v1/predict` route returns structured JSON |
+| 🎓 Model Transparency   | Returns training MSE and version                |
+| 📖 Download Support     | Attach and download papers (PDF format)         |
+| 🚀 GitHub LFS           | Handles `.pkl` files >100MB gracefully          |
+| 🚧 Error Boundaries     | Full loading/error/reset states implemented     |
+
+---
+
+## 📕 Backend (FastAPI)
+
+### Install & Run:
+
 ```bash
 cd backend
+pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-### 💻 Frontend (Vite + React)
+### Predict Route:
+
+* **Endpoint**: `POST /api/v1/predict`
+* **Request Body**: JSON with 9 features (e.g., `latitude`, `longitude`, etc.)
+* **Response**:
+
+```json
+{
+  "predicted_median_house_value": 358241.75,
+  "input_parameters": { ... },
+  "model_info": {
+    "version": "1.0.0",
+    "training_mse": 4500.75
+  }
+}
+```
+
+---
+
+## 🗺 Frontend (React + Vite)
+
+### Install & Run:
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-> Make sure your `.pkl` model is in `backend/ml_model/` and matches your training format.
+### Features:
+
+* Form-based input with validation
+* API call via `housingService.ts`
+* Result UI in `PredictionResult.tsx`
+* Mock fallback detection and toast alerts
 
 ---
 
-## 🧪 Model Details
+## 🌍 Deployment
 
-- Features used:
-  - `longitude`, `latitude`, `housing_median_age`, `total_rooms`,
-  - `total_bedrooms`, `population`, `households`, `median_income`
-- Target: `median_house_value`
-- Trained using RandomForest + GridSearchCV
-- Pickle model saved with joblib
+| Layer     | Platform | URL Example                                   |
+| --------- | -------- | --------------------------------------------- |
+| Frontend  | Vercel   | `https://california-housing-ui.vercel.app`    |
+| Backend   | Render   | `https://california-housing-api.onrender.com` |
+| LFS Files | GitHub   | `.pkl` via Git LFS                            |
 
----
+### 📌 Environment Notes:
 
-## 🌐 Deployment
-
-- **Frontend** hosted on Vercel  
-  `https://your-frontend-url.vercel.app`
-
-- **Backend** hosted on Render  
-  `https://your-backend-api.onrender.com/api/v1/predict`
-
-To switch environments, change the API endpoint in `frontend/src/services/housingService.ts`.
+* Update `housingService.ts` to use live backend URL
+* Configure CORS in `main.py` to allow Vercel domain
 
 ---
 
-## 📄 Credits
+## 🎓 Model Details
 
-Created by **Mahir Ahmed**  
-Trained on the California housing dataset (originally from StatLib)
+| Property              | Value                     |
+| --------------------- | ------------------------- |
+| Model Type            | RandomForestRegressor     |
+| Hyperparameter Tuning | GridSearchCV              |
+| Features Used         | 9 (incl. `median_income`) |
+| Target                | `median_house_value`      |
+| Training MSE          | \~4500.75                 |
 
 ---
 
-## 📬 Contact
+## 📚 Dataset
 
-For questions, collaborations, or feedback:  
-📧 nafismahir@icloud.com
-🌐 https://www.linkedin.com/in/shahriyar-ahmed-mahir-b585ba2b6/
+* Original Source: California Housing from [StatLib](https://www.dcc.fc.up.pt/~ltorgo/Regression/cal_housing.html)
+* Size: \~20,000 records
+* Format: CSV with numerical + categorical data
 
+---
 
+## 🔧 Local Development Checklist
 
+* [x] Model trained & saved via joblib
+* [x] FastAPI backend working with `/api/v1/predict`
+* [x] React form and output rendering
+* [x] CORS, loading, and error states tested
+* [x] GitHub LFS enabled and `.pkl` tracked
+
+---
+
+## 📊 Screenshots
+
+![Form Input](./screenshots/form.png)
+![Prediction Result](./screenshots/result.png)
+
+---
+
+## 💼 License
+
+This project is licensed under the MIT License.
+
+---
+
+## 📈 Contact
+
+For questions, feedback, or contributions:
+
+* **Mahir Ahmed**
+* [LinkedIn](https://linkedin.com/in/mahirahmed)
+* Email: [mahir@email.com](mailto:mahir@email.com)
