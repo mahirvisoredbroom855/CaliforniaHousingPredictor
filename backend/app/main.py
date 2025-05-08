@@ -41,19 +41,17 @@ app = FastAPI(
 # --- CORS SETUP ---
 origins = [
     "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:8080"
+    "https://housing-frontend-8xpe5f3xt-shahriyar-mahirs-projects.vercel.app"
     # Add production frontend domain here later
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,          # Or use ["*"] for testing
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],            # This is critical
+    allow_headers=["*"],            # This too
 )
-
 
 # --- ROUTERS ---
 app.include_router(predict_router, prefix="/api/v1")
