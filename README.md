@@ -166,7 +166,6 @@ npm run dev
 
 ![Form Input](./screenshots/Input.png)
 ![Prediction Result](./screenshots/Output.png)
-![Paper](./screenshots/result.png)
 
 ---
 
