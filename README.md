@@ -162,6 +162,49 @@ npm run dev
 
 ---
 
+### 🔧 Local Development Setup
+
+To run this project locally, ensure that both the **frontend** and **backend** are served on their respective ports, and update CORS + API paths accordingly.
+
+#### ✅ Backend (FastAPI)
+Start the backend server:
+```bash
+cd backend
+uvicorn app.main:app --reload
+```
+By default, this will be available at:  
+`http://127.0.0.1:8000`
+
+#### ✅ Frontend (React + Vite)
+Start the frontend dev server:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+This runs at:  
+`http://localhost:3000`
+
+#### 🔁 CORS Origins (in `main.py`)
+Ensure you allow local development origins:
+```python
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
+]
+```
+
+#### 🔄 Frontend API URL
+In `frontend/src/services/housingService.ts`, update the API call during local dev:
+```ts
+fetch('http://127.0.0.1:8000/api/v1/predict', {
+```
+
+Make sure to revert this to your Render backend URL (`https://your-api.onrender.com/...`) before deploying.
+
+
+
+
 ## 📊 Screenshots
 
 ![Form Input](./screenshots/Input.png)
