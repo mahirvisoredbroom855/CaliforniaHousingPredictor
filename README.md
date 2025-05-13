@@ -210,11 +210,6 @@ Make sure to revert this to your Render backend URL (`https://your-api.onrender.
 ![Form Input](./screenshots/Input.png)
 ![Prediction Result](./screenshots/Output.png)
 
----
-
-## 💼 License
-
-This project is licensed under the MIT License.
 
 ---
 
